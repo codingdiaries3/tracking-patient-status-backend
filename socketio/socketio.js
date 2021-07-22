@@ -12,9 +12,15 @@ const io = require("socket.io")(server, option);
 
 io.on("connection", (socket) => {
   socket.emit("status", "you just got the emit msg from socket.io");
+
   socket.on("queue", (queueStatus) => {
     console.log("queueStatus", queueStatus);
-    io.emit("updatedQueue", queueStatus);
+    io.emit("SignInQueueUpdate", queueStatus);
+  });
+
+  socket.on("clinicQueueUpdate", (queueStatus) => {
+    console.log("clinic queue status", queueStatus);
+    io.emit("clinicNewQueue", queueStatus);
   });
 });
 
